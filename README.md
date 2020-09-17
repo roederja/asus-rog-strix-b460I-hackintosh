@@ -1,6 +1,6 @@
 # Hackintosh ASUS ROG STRIX B460I
 
-This repository is about a Hackintosh based on the **Asus ROG STRIX B460I** mother board.
+This repository is about a Hackintosh based on the **Asus ROG STRIX B460I** motherboard.
 
 The Hackintosh is based on OpenCore (0.6.1 at time of writing) and macOS Catalina 10.15.6 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
 
@@ -25,10 +25,9 @@ There is no CFG-lock issue with this board.
 
 Things I changed from default:
 * Fast boot: OFF
-* Virtualisation: ON
+* Intel Virtualization Technology: ON
 * OS type: Windows UEFI
-* Enable XMP memory profile.
-* I cleared the platform key as this seems to disable secure boot.
+* Clear the platform key as this disables secure boot.
 
 ### SSDTs
 Compiled by following the [Dortania's ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/), the `.dsl` SSDT files can be found in SSDTS folder. You will need [MaciASL](https://github.com/acidanthera/MaciASL) to compile them.
@@ -58,6 +57,38 @@ This board has two USB controllers. The Intel one that drives the 6 USB3 ports o
 In addition to the USB-Map.kext you also need the modified XHCI-unsuported.kext to enable USB3 ports. The modification is to add an entry for device id 0xa3af8086. See [here](https://github.com/RehabMan/OS-X-USB-Inject-All/issues/29)
 
 ### Config.plist
-bla bla
+
+#### DeviceProperties
+Below are the properties that are board specific or deviate from the [Dortania guide](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html)
+
+##### Graphics
+PciRoot(0x0)/Pci(0x2,0x0)
+ * AAPL,ig-platform-id = 07009B3E
+ * framebuffer-patch-enable = 01000000
+ * igfxfw = 02000000
+ * device-id = 9B3E0000
+
+The device-id is needed, otherwise you will get crashes in Firefox/Safari and probably elsewhere.
+igfxfw enables the Apple firmware to be uploaded which improves performance.
+
+##### Audio
+PciRoot(0x0)/Pci(0x1F,0x3)
+ * device-id = 70A10000
+ * layout-id = 0B000000
+ 
+##### Kernel
+ Quirks > DisableRtcChecksum = TRUE - This prevents the BIOS from restarting into safe mode
+ Misc > Boot > HibernateMode = Auto - Not sure if this is necessary. The machine sleeps fine without this, but maybe this enables deeper hibernation.
+ All other settings follow the Dortania guide.
 
 ### Benchmarks
+
+| Item | Score |
+|---|---|
+| CPU - Geekbench | [Single / Multi-Core](https://browser.geekbench.com/v5/cpu/3795927): 1221 / 6275 |
+| Intel UHD630 - Geekbench | [OpenCL](https://browser.geekbench.com/v5/compute/1509911) / [Metal](https://browser.geekbench.com/v5/compute/1509921): 5319 / 4972 |
+
+### References
+* [Dortania Configuration](https://dortania.github.io/docs/latest/Configuration.html)
+* [ASUS ROG strix Z490I Hackintosh](https://github.com/jergoo/Hackintosh-ROG-STRIX-Z490I)
+* [ASUS ROG strix B460I Manual](https://dlcdnets.asus.com/pub/ASUS/mb/LGA1200/ROG_STRIX_B460-I_GAMING/E16234_ROG_STRIX_B460-I_GAMING_UM_WEB.pdf)
