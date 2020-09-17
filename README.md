@@ -56,6 +56,8 @@ This board has two USB controllers. The Intel one that drives the 6 USB3 ports o
 
 In addition to the USB-Map.kext you also need the modified XHCI-unsuported.kext to enable USB3 ports. The modification is to add an entry for device id 0xa3af8086. See [here](https://github.com/RehabMan/OS-X-USB-Inject-All/issues/29)
 
+<img src="assets/hackintool-usb.png" width="500" alt="Hackintool USB"/>
+
 ### Config.plist
 
 #### DeviceProperties
@@ -87,6 +89,10 @@ PciRoot(0x0)/Pci(0x1F,0x3)
 |---|---|
 | CPU - Geekbench | [Single / Multi-Core](https://browser.geekbench.com/v5/cpu/3795927): 1221 / 6275 |
 | Intel UHD630 - Geekbench | [OpenCL](https://browser.geekbench.com/v5/compute/1509911) / [Metal](https://browser.geekbench.com/v5/compute/1509921): 5319 / 4972 |
+
+### Screenshots
+<img src="assets/system-overview.png" width="500" alt="System Overview"/>
+<img src="assets/hackintool-peripherals.png" width="500" alt="Hackintool Peripherals"/>
 
 ### References
 * [Dortania Configuration](https://dortania.github.io/docs/latest/Configuration.html)
