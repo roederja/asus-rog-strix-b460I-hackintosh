@@ -2,7 +2,7 @@
 
 This repository is about a Hackintosh based on the **Asus ROG STRIX B460I** motherboard.
 
-The Hackintosh is based on OpenCore (0.6.1 at time of writing) and macOS Catalina 10.15.6 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
+The Hackintosh is based on OpenCore (0.6.2 at time of writing) and macOS Catalina 10.15.7 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
 
 The focus of this Hackintosh was looks, functionality and quiet operation rather than performance per Dollar. This has been achieved since there is currently nothing that doesn't work and the fans barely spin at all.
 
@@ -13,7 +13,7 @@ The focus of this Hackintosh was looks, functionality and quiet operation rather
 * WiFi module: Broadcom BCM94360NG NGFF M.2. This replaces the intel chip that comes with the Asus board. See [here](https://www.tonymacx86.com/threads/the-everything-works-asus-z390-i-gaming-i7-8700k-sapphire-nitro-radeon-rx-vega-64-build.272572/#DW1560) for instructions on how to do this. The B460 board was chosen because it doesn't have a CNVi wifi module like the ROG STRIX Z490I board for example that can't be replaced. You can buy this module on eBay, Aliexpress or Amazon.
 * CPU: [Intel Core i5-10600](https://ark.intel.com/content/www/us/en/ark/products/199273/intel-core-i5-10600-processor-12m-cache-up-to-4-80-ghz.html)
 * Cooler: [Noctua NH-L12 Ghost S1 Edition](https://noctua.at/en/nh-l12-ghost-s1-edition)
-* GPU: Intel UHD630
+* GPU: Intel UHD630 and [Sapphire Pulse RX 5600 XT BE](https://www.sapphiretech.com/en/consumer/pulse-radeon-rx-5600-xt-be-6g-gddr6). The normal (not BE) edition doesn't fir in the case!
 * RAM: [CORSAIR VENGEANCE LPX DDR4 3000 16GB(8G×2)](https://www.corsair.com/uk/en/Categories/Products/Memory/VENGEANCE-LPX/p/CMK16GX4M2B3000C15)
 * Storage: [Western Digital SN750 1 TB M.2-2280 NVME](https://www.westerndigital.com/products/internal-drives/wd-black-sn750-nvme-ssd)
 * PSU: [Corsair SF 600W 80+ Platinum](https://www.corsair.com/us/en/Categories/Products/Power-Supply-Units/Power-Supply-Units-Advanced/SF-Series/p/CP-9020182-NA)
@@ -27,6 +27,7 @@ Things I changed from default:
 * Fast boot: OFF
 * Intel Virtualization Technology: ON
 * OS type: Windows UEFI
+* Multi Monitor support: ON
 * Clear the platform key as this disables secure boot.
 
 ### SSDTs
@@ -42,7 +43,6 @@ Compiled by following the [Dortania's ACPI Guide](https://dortania.github.io/Get
 Download them from their official repo
 * [AppleALC.kext](https://github.com/acidanthera/AppleALC) - Audio
 * [FakePCIID.kext](https://github.com/RehabMan/OS-X-Fake-PCI-ID) and FakePCIID_Intel_HDMI_Audio.kext - Also needed for audio to work
-* [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup) - Not sure this is needed. Sleep seems to work without it - need to experiment more to see if this enables deeper sleep.
 * [IntelMausi.kext](https://github.com/acidanthera/IntelMausi) - Ethernet
 * [Lilu.kext](https://github.com/acidanthera/Lilu) - Enables various patching
 * [NVMeFix.kext](https://github.com/acidanthera/NVMeFix) - Better NVMe support
@@ -52,7 +52,7 @@ Download them from their official repo
 * [XHCI-unsupported.kext](https://github.com/RehabMan/OS-X-USB-Inject-All) - There is a patched version of this in this repo. Needed for USB3 to work.
 
 ### USB
-This board has two USB controllers. The Intel one that drives the 6 USB3 ports on the rear panel as well as Bluetooth and the Aura header. I'm not using the internal USB ports - so the supplied USB Map will not map these. Currently 14 ports are mapped - so there is room for one more internal port. The second controller is for the rear USB-C port - I currently don't have a USB-C device so can't test this. Looking at Hackintool it seems like a mapping might not be needed for this controller.
+This board has two USB controllers. The Intel one that drives the 6 USB3 ports on the rear panel as well as Bluetooth and the Aura header. I'm not using the internal USB ports - so the supplied USB Map will not map these. Currently 14 ports are mapped - so there is room for one more internal port. The second controller is for the rear USB-C port and it doesn't need a USB map.
 
 In addition to the USB-Map.kext you also need the modified XHCI-unsuported.kext to enable USB3 ports. The modification is to add an entry for device id 0xa3af8086. See [here](https://github.com/RehabMan/OS-X-USB-Inject-All/issues/29)
 
@@ -83,12 +83,16 @@ PciRoot(0x0)/Pci(0x1F,0x3)
  Misc > Boot > HibernateMode = Auto - Not sure if this is necessary. The machine sleeps fine without this, but maybe this enables deeper hibernation.
  All other settings follow the Dortania guide.
 
+#### NVRAM
+7C436110-AB2A-4BBB-A880-FE41995C9F82 > boot-args: Add agdpmod=pikera - This is needed for Navi GPUs to work.
+
 ### Benchmarks
 
 | Item | Score |
 |---|---|
 | CPU - Geekbench | [Single / Multi-Core](https://browser.geekbench.com/v5/cpu/3795927): 1221 / 6275 |
 | Intel UHD630 - Geekbench | [OpenCL](https://browser.geekbench.com/v5/compute/1509911) / [Metal](https://browser.geekbench.com/v5/compute/1509921): 5319 / 4972 |
+| RX 5600 XT - Geekbench | [OpenCL](https://browser.geekbench.com/v5/compute/1612224) / [Metal](https://browser.geekbench.com/v5/compute/1612235): 43209 / 45144 |
 
 ### Screenshots
 <img src="assets/system-overview.png" width="500" alt="System Overview"/>
