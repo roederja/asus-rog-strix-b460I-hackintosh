@@ -13,7 +13,7 @@ The focus of this Hackintosh was looks, functionality and quiet operation rather
 * WiFi module: Broadcom BCM94360NG NGFF M.2. This replaces the intel chip that comes with the Asus board. See [here](https://www.tonymacx86.com/threads/the-everything-works-asus-z390-i-gaming-i7-8700k-sapphire-nitro-radeon-rx-vega-64-build.272572/#DW1560) for instructions on how to do this. The B460 board was chosen because it doesn't have a CNVi wifi module like the ROG STRIX Z490I board for example that can't be replaced. You can buy this module on eBay, Aliexpress or Amazon.
 * CPU: [Intel Core i5-10600](https://ark.intel.com/content/www/us/en/ark/products/199273/intel-core-i5-10600-processor-12m-cache-up-to-4-80-ghz.html)
 * Cooler: [Noctua NH-L12 Ghost S1 Edition](https://noctua.at/en/nh-l12-ghost-s1-edition)
-* GPU: Intel UHD630 and [Sapphire Pulse RX 5600 XT BE](https://www.sapphiretech.com/en/consumer/pulse-radeon-rx-5600-xt-be-6g-gddr6). The normal (not BE) edition doesn't fir in the case!
+* GPU: Intel UHD630 and [Sapphire Pulse RX 5600 XT BE](https://www.sapphiretech.com/en/consumer/pulse-radeon-rx-5600-xt-be-6g-gddr6). The normal (not BE) edition doesn't fit in the case!
 * RAM: [CORSAIR VENGEANCE LPX DDR4 3000 16GB(8G×2)](https://www.corsair.com/uk/en/Categories/Products/Memory/VENGEANCE-LPX/p/CMK16GX4M2B3000C15)
 * Storage: [Western Digital SN750 1 TB M.2-2280 NVME](https://www.westerndigital.com/products/internal-drives/wd-black-sn750-nvme-ssd)
 * PSU: [Corsair SF 600W 80+ Platinum](https://www.corsair.com/us/en/Categories/Products/Power-Supply-Units/Power-Supply-Units-Advanced/SF-Series/p/CP-9020182-NA)
@@ -38,6 +38,7 @@ Compiled by following the [Dortania's ACPI Guide](https://dortania.github.io/Get
 * SSDT-PLUG (Power management)
 * SSDT-RHUB (reset USB controller)
 * SSDT-SBUS-MCHC (SMBus support)
+* [SSDT-RX5700XT](https://www.tonymacx86.com/threads/amd-radeon-performance-enhanced-ssdt.296555/) (Better support for RX5600/5700)
 
 ### Kexts
 Download them from their official repo
@@ -50,13 +51,23 @@ Download them from their official repo
 * USB-Map.kext - Available from the kexts folder in this repo. This maps the 6 USB3 ports and the two internal ones used for Bluetooth and the Aura header. See USB section.
 * [WhateverGreen.kext](https://github.com/acidanthera/WhateverGreen) - Various graphics related patches
 * [XHCI-unsupported.kext](https://github.com/RehabMan/OS-X-USB-Inject-All) - There is a patched version of this in this repo. Needed for USB3 to work.
+* [DAGPM.kext](https://www.tonymacx86.com/threads/amd-radeon-performance-enhanced-ssdt.296555/) - Better power management for AMD Navi GPUs.
 
 ### USB
 This board has two USB controllers. The Intel one that drives the 6 USB3 ports on the rear panel as well as Bluetooth and the Aura header. I'm not using the internal USB ports - so the supplied USB Map will not map these. Currently 14 ports are mapped - so there is room for one more internal port. The second controller is for the rear USB-C port and it doesn't need a USB map.
 
+The front USB ports that I didn't map have the following IDs (thanks to [zhzhzh88](https://www.reddit.com/r/hackintosh/comments/hbcdgq/asus_rog_strix_b460i_gaming_mobo_hackintosh/g8cmw5b?utm_source=share&utm_medium=web2x&context=3)):
+* HS01, port 0x01 (USB2)
+* HS02, port 0x02 (USB2)
+* SS01, port 0x11 (USB3)
+* SS02, port 0x12 (USB3)
+
 In addition to the USB-Map.kext you also need the modified XHCI-unsuported.kext to enable USB3 ports. The modification is to add an entry for device id 0xa3af8086. See [here](https://github.com/RehabMan/OS-X-USB-Inject-All/issues/29)
 
 <img src="assets/hackintool-usb.png" width="500" alt="Hackintool USB"/>
+
+### Note on Navi GPU
+I found that installing the kext and SSDT from [here](https://www.tonymacx86.com/threads/amd-radeon-performance-enhanced-ssdt.296555/) not only improves Geekbench scores (see below), but also real world performance in Mafia III. Without it the GPU seemed to thermal throttle after a few minutes of playing and the frame rate would drop really low. Interestingly I did not see this happen with [Unigine Heaven](https://benchmark.unigine.com/heaven) which is much harder on the GPU.
 
 ### Config.plist
 
@@ -93,6 +104,7 @@ PciRoot(0x0)/Pci(0x1F,0x3)
 | CPU - Geekbench | [Single / Multi-Core](https://browser.geekbench.com/v5/cpu/3795927): 1221 / 6275 |
 | Intel UHD630 - Geekbench | [OpenCL](https://browser.geekbench.com/v5/compute/1509911) / [Metal](https://browser.geekbench.com/v5/compute/1509921): 5319 / 4972 |
 | RX 5600 XT - Geekbench | [OpenCL](https://browser.geekbench.com/v5/compute/1612224) / [Metal](https://browser.geekbench.com/v5/compute/1612235): 43209 / 45144 |
+| RX 5600 XT - Geekbench ([with Radeon performance improvements](https://www.tonymacx86.com/threads/amd-radeon-performance-enhanced-ssdt.296555/)) | [OpenCL](https://browser.geekbench.com/v5/compute/1662816) / [Metal](https://browser.geekbench.com/v5/compute/1662822): 54139 / 61044 |
 
 ### Screenshots
 <img src="assets/system-overview.png" width="500" alt="System Overview"/>
