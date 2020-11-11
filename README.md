@@ -2,14 +2,14 @@
 
 This repository is about a Hackintosh based on the **Asus ROG STRIX B460I** motherboard.
 
-The Hackintosh is based on OpenCore (0.6.2 at time of writing) and macOS Catalina 10.15.7 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
+The Hackintosh is based on OpenCore (0.6.3 at time of writing) and macOS Catalina 10.15.7 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
 
 The focus of this Hackintosh was looks, functionality and quiet operation rather than performance per Dollar. This has been achieved since there is currently nothing that doesn't work and the fans barely spin at all.
 
 ## Hardware
 
 * Case: [Louque Ghost S1](https://www.louqe.com/ghost-s1/)
-* Motherboard: [Asus ROG STRIX B460-I](https://www.asus.com/us/Motherboards/ROG-STRIX-B460-I-GAMING/) (BIOS version 0401)
+* Motherboard: [Asus ROG STRIX B460-I](https://www.asus.com/us/Motherboards/ROG-STRIX-B460-I-GAMING/) (BIOS version 0707)
 * WiFi module: Broadcom BCM94360NG NGFF M.2. This replaces the intel chip that comes with the Asus board. See [here](https://www.tonymacx86.com/threads/the-everything-works-asus-z390-i-gaming-i7-8700k-sapphire-nitro-radeon-rx-vega-64-build.272572/#DW1560) for instructions on how to do this. The B460 board was chosen because it doesn't have a CNVi wifi module, like the ROG STRIX Z490I board for example, that can't be replaced. You can buy this module on eBay, Aliexpress or Amazon.
 * CPU: [Intel Core i5-10600](https://ark.intel.com/content/www/us/en/ark/products/199273/intel-core-i5-10600-processor-12m-cache-up-to-4-80-ghz.html)
 * Cooler: [Noctua NH-L12 Ghost S1 Edition](https://noctua.at/en/nh-l12-ghost-s1-edition)
@@ -21,7 +21,7 @@ The focus of this Hackintosh was looks, functionality and quiet operation rather
 ## Details
 
 ### BIOS
-There is no CFG-lock issue with this board.
+There is no CFG-lock issue with this board. Installing BIOS version 0707 is worth it as it enables higher resolutions in the boot loader screen for me.
 
 Things I changed from default:
 * Fast boot: OFF
@@ -54,7 +54,7 @@ Download them from their official repo
 * [DAGPM.kext](https://www.tonymacx86.com/threads/amd-radeon-performance-enhanced-ssdt.296555/) - Better power management for AMD Navi GPUs.
 
 ### USB
-This board has two USB controllers. The Intel one that drives the 6 USB3 ports on the rear panel as well as Bluetooth and the Aura header. I'm not using the internal USB ports - so the supplied USB Map will not map these. Currently 14 ports are mapped - so there is room for one more internal port. The second controller is for the rear USB-C port and it doesn't need a USB map.
+This board has two USB controllers. The Intel one that drives the 6 USB3 ports on the rear panel as well as Bluetooth and the Aura header. I'm not using the internal USB ports - so the supplied USB Map will not map these. Currently 14 ports are mapped - so there is room for one more logical port. The second controller is for the rear USB-C port and it doesn't need a USB map.
 
 The front USB ports that I didn't map have the following IDs (thanks to [zhzhzh88](https://www.reddit.com/r/hackintosh/comments/hbcdgq/asus_rog_strix_b460i_gaming_mobo_hackintosh/g8cmw5b?utm_source=share&utm_medium=web2x&context=3)):
 * HS01, port 0x01 (USB2)
