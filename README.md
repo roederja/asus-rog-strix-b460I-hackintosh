@@ -2,7 +2,7 @@
 
 This repository is about a Hackintosh based on the **Asus ROG STRIX B460I** motherboard.
 
-The Hackintosh is based on OpenCore (0.6.3 at time of writing) and macOS Catalina 10.15.7 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
+The Hackintosh is based on OpenCore (0.6.5 at time of writing) and macOS Catalina 10.15.7 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
 
 The focus of this Hackintosh was looks, functionality and quiet operation rather than performance per Dollar. This has been achieved since there is currently nothing that doesn't work and the fans barely spin at all.
 
@@ -52,6 +52,7 @@ Download them from their official repo
 * [WhateverGreen.kext](https://github.com/acidanthera/WhateverGreen) - Various graphics related patches
 * [XHCI-unsupported.kext](https://github.com/RehabMan/OS-X-USB-Inject-All) - There is a patched version of this in this repo. Needed for USB3 to work.
 * [DAGPM.kext](https://www.tonymacx86.com/threads/amd-radeon-performance-enhanced-ssdt.296555/) - Better power management for AMD Navi GPUs.
+* [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup) - Added this back as it seems like my computer crashed when in sleep mode for more than 24h. Need more testing to see if this fixes it though.
 
 ### USB
 This board has two USB controllers. The Intel one that drives the 6 USB3 ports on the rear panel as well as Bluetooth and the Aura header. I'm not using the internal USB ports - so the supplied USB Map will not map these. Currently 14 ports are mapped - so there is room for one more logical port. The second controller is for the rear USB-C port and it doesn't need a USB map.
