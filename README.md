@@ -9,7 +9,7 @@ The focus of this Hackintosh was looks, functionality and quiet operation rather
 ## Hardware
 
 * Case: [Louque Ghost S1](https://www.louqe.com/ghost-s1/)
-* Motherboard: [Asus ROG STRIX B460-I](https://www.asus.com/us/Motherboards/ROG-STRIX-B460-I-GAMING/) (BIOS version 0707)
+* Motherboard: [Asus ROG STRIX B460-I](https://www.asus.com/us/Motherboards/ROG-STRIX-B460-I-GAMING/) (BIOS version 1505)
 * WiFi module: Broadcom BCM94360NG NGFF M.2. This replaces the intel chip that comes with the Asus board. See [here](https://www.tonymacx86.com/threads/the-everything-works-asus-z390-i-gaming-i7-8700k-sapphire-nitro-radeon-rx-vega-64-build.272572/#DW1560) for instructions on how to do this. The B460 board was chosen because it doesn't have a CNVi wifi module, like the ROG STRIX Z490I board for example, that can't be replaced. You can buy this module on eBay, Aliexpress or Amazon.
 * CPU: [Intel Core i5-10600](https://ark.intel.com/content/www/us/en/ark/products/199273/intel-core-i5-10600-processor-12m-cache-up-to-4-80-ghz.html)
 * Cooler: [Noctua NH-L12 Ghost S1 Edition](https://noctua.at/en/nh-l12-ghost-s1-edition)
@@ -28,6 +28,10 @@ Things I changed from default:
 * Intel Virtualization Technology: ON
 * OS type: Windows UEFI
 * Multi Monitor support: ON
+* Above 4G decoding: Enabled
+* Resizable BAR support: Auto
+* Memory Profile: XMP1
+* Asus Performance Enhancement: ON
 * Clear the platform key as this disables secure boot.
 
 ### SSDTs
@@ -92,6 +96,7 @@ PciRoot(0x0)/Pci(0x1F,0x3)
  
 #### Kernel
  Quirks > DisableRtcChecksum = TRUE - This prevents the BIOS from restarting into safe mode
+ Quirks > ResizeAppleGpuBars = 0 - Without this the GPU won't work if Resizable BAR support is enabled.
  Misc > Boot > HibernateMode = Auto - Not sure if this is necessary. The machine sleeps fine without this, but maybe this enables deeper hibernation.
  All other settings follow the Dortania guide.
  
