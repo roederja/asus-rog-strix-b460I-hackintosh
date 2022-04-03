@@ -2,7 +2,7 @@
 
 This repository is about a Hackintosh based on the **Asus ROG STRIX B460I** motherboard.
 
-The Hackintosh is based on OpenCore (0.6.5 at time of writing) and macOS Catalina 10.15.7 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
+The Hackintosh is based on OpenCore (0.7.9 at time of writing) and macOS Big Sur 11.6.5 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
 
 The focus of this Hackintosh was looks, functionality and quiet operation rather than performance per Dollar. This has been achieved since there is currently nothing that doesn't work and the fans barely spin at all.
 
