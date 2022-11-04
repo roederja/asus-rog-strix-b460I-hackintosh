@@ -2,7 +2,7 @@
 
 This repository is about a Hackintosh based on the **Asus ROG STRIX B460I** motherboard.
 
-The Hackintosh is based on OpenCore (0.7.9 at time of writing) and macOS Big Sur 11.6.5 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
+The Hackintosh is based on OpenCore (0.8.5 at time of writing) and macOS Big Sur 11.7.1 following the [Dortania Guide](https://dortania.github.io/OpenCore-Install-Guide/) for [Comet Lake](https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#starting-point).
 
 The focus of this Hackintosh was looks, functionality and quiet operation rather than performance per Dollar. This has been achieved since there is currently nothing that doesn't work and the fans barely spin at all.
 
@@ -10,7 +10,7 @@ The focus of this Hackintosh was looks, functionality and quiet operation rather
 
 * Case: [Louque Ghost S1](https://www.louqe.com/ghost-s1/)
 * Motherboard: [Asus ROG STRIX B460-I](https://www.asus.com/us/Motherboards/ROG-STRIX-B460-I-GAMING/) (BIOS version 1505)
-* WiFi module: Broadcom BCM94360NG NGFF M.2. This replaces the intel chip that comes with the Asus board. See [here](https://www.tonymacx86.com/threads/the-everything-works-asus-z390-i-gaming-i7-8700k-sapphire-nitro-radeon-rx-vega-64-build.272572/#DW1560) for instructions on how to do this. The B460 board was chosen because it doesn't have a CNVi wifi module, like the ROG STRIX Z490I board for example, that can't be replaced. You can buy this module on eBay, Aliexpress or Amazon.
+* WiFi module: Broadcom BCM94360NG NGFF M.2. This replaces the intel chip that comes with the Asus board. See [here](https://www.tonymacx86.com/threads/the-everything-works-asus-z390-i-gaming-i7-8700k-sapphire-nitro-radeon-rx-vega-64-build.272572/#DW1560) for instructions on how to do this. The B460 board was chosen because it doesn't have a CNVi wifi module, like the ROG STRIX Z490I board for example, that can't be replaced. You can buy this module on eBay, Aliexpress or Amazon. Only problem is that it seems to only use one spatial stream when cold booted into macOS. See [here](https://github.com/acidanthera/bugtracker/issues/1532)
 * CPU: [Intel Core i5-10600](https://ark.intel.com/content/www/us/en/ark/products/199273/intel-core-i5-10600-processor-12m-cache-up-to-4-80-ghz.html)
 * Cooler: [Noctua NH-L12 Ghost S1 Edition](https://noctua.at/en/nh-l12-ghost-s1-edition)
 * GPU: Intel UHD630 and [Sapphire Pulse RX 5600 XT BE](https://www.sapphiretech.com/en/consumer/pulse-radeon-rx-5600-xt-be-6g-gddr6). The normal (not BE) edition doesn't fit in the case!
@@ -21,7 +21,7 @@ The focus of this Hackintosh was looks, functionality and quiet operation rather
 ## Details
 
 ### BIOS
-There is no CFG-lock issue with this board. Installing BIOS version 0707 is worth it as it enables higher resolutions in the boot loader screen for me.
+There is no CFG-lock issue with this board. Installing BIOS version 0707 (or higher) is worth it as it enables higher resolutions in the boot loader screen for me.
 
 Things I changed from default:
 * Fast boot: OFF
@@ -47,7 +47,6 @@ Compiled by following the [Dortania's ACPI Guide](https://dortania.github.io/Get
 ### Kexts
 Download them from their official repo
 * [AppleALC.kext](https://github.com/acidanthera/AppleALC) - Audio
-* [FakePCIID.kext](https://github.com/RehabMan/OS-X-Fake-PCI-ID) and FakePCIID_Intel_HDMI_Audio.kext - Also needed for audio to work
 * [IntelMausi.kext](https://github.com/acidanthera/IntelMausi) - Ethernet
 * [Lilu.kext](https://github.com/acidanthera/Lilu) - Enables various patching
 * [NVMeFix.kext](https://github.com/acidanthera/NVMeFix) - Better NVMe support
@@ -91,7 +90,6 @@ igfxfw enables the Apple firmware to be uploaded which improves performance.
 
 ##### Audio
 PciRoot(0x0)/Pci(0x1F,0x3)
- * device-id = 70A10000
  * layout-id = 0B000000
  
 #### Kernel
